@@ -1,8 +1,9 @@
 
 
-const asynchandler= (requesthandler)=>(req,res,next)=>{
+const asynchandler= (requesthandler)=>{
+  (req,res,next)=>{  
  promise.resolve(requesthandler(req,res,next)).catch((error)=>next(error))
-}
+}}
 
 
 /* 

@@ -1,7 +1,7 @@
-import mongoose, {schema} from "mongoose";
-import jwt from "jasonwebtoken";
+import mongoose, {Schema} from "mongoose";
+import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
-import { TokenExpiredError } from "jsonwebtoken";
+
 
 const userSchema = new Schema(
   {
@@ -50,7 +50,7 @@ const userSchema = new Schema(
         required: [true,"password is required"]
        },
        refreshToken:{
-        type: Strings
+        type: String,
        }
       },
       {
@@ -80,7 +80,7 @@ userSchema.methods.generateAccessToken= function(){
     fullname: this.fullname,
   },
   process.env.ACCESS_TOKEN_SECRET,{
-    expireIn: process.env,ACCESS_TOKEN_EXPIRY,
+    expireIn: process.env.ACCESS_TOKEN_EXPIRY,
   }
  )
 }
@@ -89,8 +89,8 @@ userSchema.methods.generateRefreshToken= function(){
     {
       _id: this._id, 
     },
-    process.enc.REFRESH_TOKEN_SECRET,{
-      expireIn: process.env.REFRESH_TOKEN_EXPIRE,
+    process.env.REFRESH_TOKEN_SECRET,{
+      expiresIn: process.env.REFRESH_TOKEN_EXPIRE,
     }
   )
 }

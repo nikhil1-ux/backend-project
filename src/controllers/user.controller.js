@@ -23,7 +23,7 @@ const registerUser = asynchandler( async(req,res)=>{
   console.log("password",password);
   console.log("username",username);
   console.log("fullname",fullname);
-  console.log(req.files)
+  //console.log(req.files)
 
 
 if([fullname,email,username,password,].some((field)=>
@@ -47,7 +47,7 @@ if([fullname,email,username,password,].some((field)=>
     const avatar = await uploadOnCloudinary(avatarLocalPath);
     const coverImage = await uploadOnCloudinary(coverImageLocalPath)
     if(!avatar){
-       throw new apiError(400,"avatar file is required")
+       throw new apiError(400,"avatar file is required avatar file is not uploaded on cloudinary ")
     }
    
      const user = await User.create({
@@ -56,7 +56,8 @@ if([fullname,email,username,password,].some((field)=>
       coverImage: coverImage?.url || "",
       email,
       password,
-      username: username.tolowercase,
+      username: username.toLowerCase(),
+      
      })
      const createdUser = await User.findById(user._id).select(
       " -password -refreshToken"

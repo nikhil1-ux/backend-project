@@ -100,7 +100,9 @@ const loginUser = asynchandler( async(req,res)=>{
 
  const {email,username,password}= req.body
 
- if(!username || !email){
+ console.log(email);
+
+ if(!username && !email){
   throw new APIERROR(400,"username or email is required");
  }
  const user = await User.findOne({
@@ -166,5 +168,5 @@ const logoutUser = asynchandler(async(req,res)=>{
 
 
 export {registerUser,
-  loginUser
+  loginUser,logoutUser
 }

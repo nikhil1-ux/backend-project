@@ -168,9 +168,10 @@ const logoutUser = asynchandler(async(req,res)=>{
   .json(new ApiResponse(200,{},"user logged out successfully"))
 })
 
-try {
+
   const refreshAccessToken = asynchandler(async(req,res)=>{
     
+    try{
     const incomingRefreshToken = req.cookies.refreshToken || req.body.refreshToken;
    
     if (!incomingRefreshToken){
@@ -192,11 +193,11 @@ try {
       }
   
       const options ={
-        httpOnly: ture,
+        httpOnly: true,
         secure:true
       }
   
-      const {accessToken,newRefreshToken} = await generateAccessAndRefreshTokens;
+      const {accessToken,newRefreshToken} = await generateAccessAndRefreshTokens(user?.id);
   
       return res
       .status(200)
@@ -210,14 +211,16 @@ try {
       )
   
     
-  })
-} catch (error) {
+  }
+ catch (error) {
   
   throw new apiError(401,error?.message || "invalid refresh token")
 }
+})
 
 
 export {registerUser,
-  loginUser,logoutUser,
+  loginUser,
+  logoutUser,
   refreshAccessToken
 }

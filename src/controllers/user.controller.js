@@ -466,6 +466,10 @@ const getWatchHistory = asynchandler(async(req,res)=>{
     }
    ])
 
+   return res
+   .status(200)
+   .json(new ApiResponse(200,user[0].watchHistoryDetails,"user watch history details"))
+
 })
 
 
